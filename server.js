@@ -55,15 +55,15 @@ app.post("/register", async (req, res) => {
     }
 
     // Validate category
-    if (!['PoliceMa', 'SimpleUser'].includes(category)) {
+    if (!['PoliceMan', 'SimpleUser'].includes(category)) {
       return res.status(400).json({ error: "Category must be either 'PoliceMa' or 'SimpleUser'" });
     }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: "Email already registered" });
-    }
+    //const existingUser = await User.findOne({ email });
+    //if (existingUser) {
+      //return res.status(400).json({ error: "Email already registered" });
+    //}
 
     // Create new user
     const user = new User({
@@ -73,8 +73,8 @@ app.post("/register", async (req, res) => {
       category,
       phone: phone || '',
       address: address || '',
-      policeStationId: category === 'PoliceMa' ? policeStationId || '' : '',
-      badgeNumber: category === 'PoliceMa' ? badgeNumber || '' : '',
+      policeStationId: category === 'PoliceMan' ? policeStationId || '' : '',
+      badgeNumber: category === 'PoliceMan' ? badgeNumber || '' : '',
     });
 
     await user.save();
