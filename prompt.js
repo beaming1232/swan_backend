@@ -144,4 +144,4 @@ Please consult a licensed advocate or legal professional for proper advice.
 If you need more details about the case, ask the user clarifying questions first. dont use any symbol in.
 `;
 
-module.exports = { SYSTEM_PROMPT };
+export { SYSTEM_PROMPT };
