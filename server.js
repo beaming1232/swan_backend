@@ -9,12 +9,14 @@ import jwt from 'jsonwebtoken';
 import { SYSTEM_PROMPT } from "./prompt.js";
 import User from "./models/User.js";
 
+import dbConnect from "./lib/dbConnect.js";
+
 dotenv.config();
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/firgen')
-  .then(() => console.log("✓ MongoDB connected successfully"))
-  .catch((err) => console.error("✗ MongoDB connection error:", err.message));
+//mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/firgen')
+  //.then(() => console.log("✓ MongoDB connected successfully"))
+  //.catch((err) => console.error("✗ MongoDB connection error:", err.message));
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
@@ -22,7 +24,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key_here_change_in
 
 const app = express();
 const PORT = 3000;
-
+await dbConnect();
 app.use(cors());
 app.use(express.json());
 
@@ -46,6 +48,7 @@ app.get("/health", (req, res) => {
 // --- User Registration ---
 app.post("/register", async (req, res) => {
   try {
+    await dbConnect();
     console.log("Registration request body:", req.body);
     const { name, email, password, category, phone, address, policeStationId, badgeNumber } = req.body;
 
@@ -96,6 +99,7 @@ app.post("/register", async (req, res) => {
 // --- User Login ---
 app.post("/login", async (req, res) => {
   try {
+    await dbConnect();
     const { email, password } = req.body;
 
     // Validate required fields
