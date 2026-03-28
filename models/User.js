@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['PoliceMa', 'SimpleUser'],
+    enum: ['PoliceMan', 'SimpleUser'],
     required: true,
   },
   phone: {
